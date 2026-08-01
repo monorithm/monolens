@@ -1,0 +1,10 @@
+Holds this directory in git without holding its contents.
+
+example/pubspec.yaml declares `assets/`, so the directory has to exist or
+`flutter analyze` reports asset_directory_does_not_exist and exits non-zero.
+The fixtures that belong here are binaries, generated rather than committed:
+
+    swift tool/make_fixture.swift
+
+That generator is macOS-only, so the Linux analyze job never runs it and would
+otherwise always see a missing directory.

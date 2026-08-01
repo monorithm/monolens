@@ -47,4 +47,12 @@ bun.lock
 
 # Integration-test fixtures — reproduce with `swift tool/make_fixture.swift`.
 # Written rather than committed so the repo carries no binaries.
-/example/assets/
+#
+# The contents, not the directory: git cannot re-include a file whose parent
+# directory is excluded, so `/example/assets/` would make the negation below
+# dead. The directory itself has to survive, because `example/pubspec.yaml`
+# declares `assets/` and `flutter analyze` fails on a declared asset directory
+# that is not there — which is every clean checkout, since the fixture
+# generator is macOS-only and never runs in the analyze job.
+/example/assets/*
+!/example/assets/.gitkeep
