@@ -10,9 +10,9 @@ import 'package:flutter/services.dart';
 import 'package:meta/meta.dart' show immutable, protected, visibleForTesting;
 
 Object? _extractReplyValueOrThrow(
-    List<Object?>? replyList,
-    String channelName, {
-    required bool isNullValid,
+  List<Object?>? replyList,
+  String channelName, {
+  required bool isNullValid,
 }) {
   if (replyList == null) {
     throw PlatformException(
@@ -34,8 +34,11 @@ Object? _extractReplyValueOrThrow(
   return replyList.firstOrNull;
 }
 
-
-List<Object?> wrapResponse({Object? result, PlatformException? error, bool empty = false}) {
+List<Object?> wrapResponse({
+  Object? result,
+  PlatformException? error,
+  bool empty = false,
+}) {
   if (empty) {
     return <Object?>[];
   }
@@ -44,6 +47,7 @@ List<Object?> wrapResponse({Object? result, PlatformException? error, bool empty
   }
   return <Object?>[error.code, error.message, error.details];
 }
+
 bool _deepEquals(Object? a, Object? b) {
   if (identical(a, b)) {
     return true;
@@ -56,8 +60,9 @@ bool _deepEquals(Object? a, Object? b) {
   }
   if (a is List && b is List) {
     return a.length == b.length &&
-        a.indexed
-            .every(((int, dynamic) item) => _deepEquals(item.$2, b[item.$1]));
+        a.indexed.every(
+          ((int, dynamic) item) => _deepEquals(item.$2, b[item.$1]),
+        );
   }
   if (a is Map && b is Map) {
     if (a.length != b.length) {
@@ -106,33 +111,16 @@ int _deepHash(Object? value) {
   return value.hashCode;
 }
 
-
 /// Clockwise quarter turns applied after cropping.
-enum MonoRotation {
-  none,
-  quarterTurn,
-  halfTurn,
-  threeQuarterTurns,
-}
+enum MonoRotation { none, quarterTurn, halfTurn, threeQuarterTurns }
 
 /// How a still is re-encoded on export.
-enum MonoImageFormat {
-  jpeg,
-  png,
-}
+enum MonoImageFormat { jpeg, png }
 
 /// Which kind of overlay an [AnnotationSpec] describes.
-enum AnnotationKind {
-  text,
-  sticker,
-  blur,
-  stroke,
-}
+enum AnnotationKind { text, sticker, blur, stroke }
 
-enum BlurShapeSpec {
-  rectangle,
-  oval,
-}
+enum BlurShapeSpec { rectangle, oval }
 
 /// A crop as fractions of the frame, 0–1.
 ///
@@ -157,16 +145,12 @@ class NormalizedRect {
   double height;
 
   List<Object?> _toList() {
-    return <Object?>[
-      left,
-      top,
-      width,
-      height,
-    ];
+    return <Object?>[left, top, width, height];
   }
 
   Object encode() {
-    return _toList();  }
+    return _toList();
+  }
 
   static NormalizedRect decode(Object result) {
     result as List<Object?>;
@@ -187,7 +171,10 @@ class NormalizedRect {
     if (identical(this, other)) {
       return true;
     }
-    return _deepEquals(left, other.left) && _deepEquals(top, other.top) && _deepEquals(width, other.width) && _deepEquals(height, other.height);
+    return _deepEquals(left, other.left) &&
+        _deepEquals(top, other.top) &&
+        _deepEquals(width, other.width) &&
+        _deepEquals(height, other.height);
   }
 
   @override
@@ -251,7 +238,8 @@ class ImageEditRequest {
   }
 
   Object encode() {
-    return _toList();  }
+    return _toList();
+  }
 
   static ImageEditRequest decode(Object result) {
     result as List<Object?>;
@@ -277,7 +265,15 @@ class ImageEditRequest {
     if (identical(this, other)) {
       return true;
     }
-    return _deepEquals(sourcePath, other.sourcePath) && _deepEquals(outputPath, other.outputPath) && _deepEquals(crop, other.crop) && _deepEquals(rotation, other.rotation) && _deepEquals(flipHorizontal, other.flipHorizontal) && _deepEquals(format, other.format) && _deepEquals(quality, other.quality) && _deepEquals(maxDimension, other.maxDimension) && _deepEquals(annotations, other.annotations);
+    return _deepEquals(sourcePath, other.sourcePath) &&
+        _deepEquals(outputPath, other.outputPath) &&
+        _deepEquals(crop, other.crop) &&
+        _deepEquals(rotation, other.rotation) &&
+        _deepEquals(flipHorizontal, other.flipHorizontal) &&
+        _deepEquals(format, other.format) &&
+        _deepEquals(quality, other.quality) &&
+        _deepEquals(maxDimension, other.maxDimension) &&
+        _deepEquals(annotations, other.annotations);
   }
 
   @override
@@ -374,7 +370,8 @@ class AnnotationSpec {
   }
 
   Object encode() {
-    return _toList();  }
+    return _toList();
+  }
 
   static AnnotationSpec decode(Object result) {
     result as List<Object?>;
@@ -406,7 +403,21 @@ class AnnotationSpec {
     if (identical(this, other)) {
       return true;
     }
-    return _deepEquals(kind, other.kind) && _deepEquals(rotation, other.rotation) && _deepEquals(text, other.text) && _deepEquals(centerX, other.centerX) && _deepEquals(centerY, other.centerY) && _deepEquals(heightFraction, other.heightFraction) && _deepEquals(colorArgb, other.colorArgb) && _deepEquals(backgroundArgb, other.backgroundArgb) && _deepEquals(imagePath, other.imagePath) && _deepEquals(rect, other.rect) && _deepEquals(opacity, other.opacity) && _deepEquals(strength, other.strength) && _deepEquals(shape, other.shape) && _deepEquals(points, other.points) && _deepEquals(widthFraction, other.widthFraction);
+    return _deepEquals(kind, other.kind) &&
+        _deepEquals(rotation, other.rotation) &&
+        _deepEquals(text, other.text) &&
+        _deepEquals(centerX, other.centerX) &&
+        _deepEquals(centerY, other.centerY) &&
+        _deepEquals(heightFraction, other.heightFraction) &&
+        _deepEquals(colorArgb, other.colorArgb) &&
+        _deepEquals(backgroundArgb, other.backgroundArgb) &&
+        _deepEquals(imagePath, other.imagePath) &&
+        _deepEquals(rect, other.rect) &&
+        _deepEquals(opacity, other.opacity) &&
+        _deepEquals(strength, other.strength) &&
+        _deepEquals(shape, other.shape) &&
+        _deepEquals(points, other.points) &&
+        _deepEquals(widthFraction, other.widthFraction);
   }
 
   @override
@@ -469,7 +480,8 @@ class VideoTrimRequest {
   }
 
   Object encode() {
-    return _toList();  }
+    return _toList();
+  }
 
   static VideoTrimRequest decode(Object result) {
     result as List<Object?>;
@@ -495,7 +507,15 @@ class VideoTrimRequest {
     if (identical(this, other)) {
       return true;
     }
-    return _deepEquals(sourcePath, other.sourcePath) && _deepEquals(outputPath, other.outputPath) && _deepEquals(startMs, other.startMs) && _deepEquals(endMs, other.endMs) && _deepEquals(muteAudio, other.muteAudio) && _deepEquals(crop, other.crop) && _deepEquals(rotation, other.rotation) && _deepEquals(flipHorizontal, other.flipHorizontal) && _deepEquals(annotations, other.annotations);
+    return _deepEquals(sourcePath, other.sourcePath) &&
+        _deepEquals(outputPath, other.outputPath) &&
+        _deepEquals(startMs, other.startMs) &&
+        _deepEquals(endMs, other.endMs) &&
+        _deepEquals(muteAudio, other.muteAudio) &&
+        _deepEquals(crop, other.crop) &&
+        _deepEquals(rotation, other.rotation) &&
+        _deepEquals(flipHorizontal, other.flipHorizontal) &&
+        _deepEquals(annotations, other.annotations);
   }
 
   @override
@@ -532,17 +552,12 @@ class MediaInfo {
   int byteSize;
 
   List<Object?> _toList() {
-    return <Object?>[
-      path,
-      width,
-      height,
-      durationMs,
-      byteSize,
-    ];
+    return <Object?>[path, width, height, durationMs, byteSize];
   }
 
   Object encode() {
-    return _toList();  }
+    return _toList();
+  }
 
   static MediaInfo decode(Object result) {
     result as List<Object?>;
@@ -564,7 +579,11 @@ class MediaInfo {
     if (identical(this, other)) {
       return true;
     }
-    return _deepEquals(path, other.path) && _deepEquals(width, other.width) && _deepEquals(height, other.height) && _deepEquals(durationMs, other.durationMs) && _deepEquals(byteSize, other.byteSize);
+    return _deepEquals(path, other.path) &&
+        _deepEquals(width, other.width) &&
+        _deepEquals(height, other.height) &&
+        _deepEquals(durationMs, other.durationMs) &&
+        _deepEquals(byteSize, other.byteSize);
   }
 
   @override
@@ -577,7 +596,6 @@ class MediaInfo {
   }
 }
 
-
 class _PigeonCodec extends StandardMessageCodec {
   const _PigeonCodec();
   @override
@@ -585,31 +603,31 @@ class _PigeonCodec extends StandardMessageCodec {
     if (value is int) {
       buffer.putUint8(4);
       buffer.putInt64(value);
-    }    else if (value is MonoRotation) {
+    } else if (value is MonoRotation) {
       buffer.putUint8(129);
       writeValue(buffer, value.index);
-    }    else if (value is MonoImageFormat) {
+    } else if (value is MonoImageFormat) {
       buffer.putUint8(130);
       writeValue(buffer, value.index);
-    }    else if (value is AnnotationKind) {
+    } else if (value is AnnotationKind) {
       buffer.putUint8(131);
       writeValue(buffer, value.index);
-    }    else if (value is BlurShapeSpec) {
+    } else if (value is BlurShapeSpec) {
       buffer.putUint8(132);
       writeValue(buffer, value.index);
-    }    else if (value is NormalizedRect) {
+    } else if (value is NormalizedRect) {
       buffer.putUint8(133);
       writeValue(buffer, value.encode());
-    }    else if (value is ImageEditRequest) {
+    } else if (value is ImageEditRequest) {
       buffer.putUint8(134);
       writeValue(buffer, value.encode());
-    }    else if (value is AnnotationSpec) {
+    } else if (value is AnnotationSpec) {
       buffer.putUint8(135);
       writeValue(buffer, value.encode());
-    }    else if (value is VideoTrimRequest) {
+    } else if (value is VideoTrimRequest) {
       buffer.putUint8(136);
       writeValue(buffer, value.encode());
-    }    else if (value is MediaInfo) {
+    } else if (value is MediaInfo) {
       buffer.putUint8(137);
       writeValue(buffer, value.encode());
     } else {
@@ -652,9 +670,13 @@ class MonolensHostApi {
   /// Constructor for [MonolensHostApi]. The [binaryMessenger] named argument is
   /// available for dependency injection. If it is left null, the default
   /// BinaryMessenger will be used which routes to the host platform.
-  MonolensHostApi({BinaryMessenger? binaryMessenger, String messageChannelSuffix = ''})
-      : pigeonVar_binaryMessenger = binaryMessenger,
-        pigeonVar_messageChannelSuffix = messageChannelSuffix.isNotEmpty ? '.$messageChannelSuffix' : '';
+  MonolensHostApi({
+    BinaryMessenger? binaryMessenger,
+    String messageChannelSuffix = '',
+  }) : pigeonVar_binaryMessenger = binaryMessenger,
+       pigeonVar_messageChannelSuffix = messageChannelSuffix.isNotEmpty
+           ? '.$messageChannelSuffix'
+           : '';
   final BinaryMessenger? pigeonVar_binaryMessenger;
 
   static const MessageCodec<Object?> pigeonChannelCodec = _PigeonCodec();
@@ -668,7 +690,8 @@ class MonolensHostApi {
   /// (`NSTemporaryDirectory()` / `context.cacheDir`). Contents are the OS's to
   /// evict — a caller keeping an export must copy it somewhere durable.
   Future<String> cacheDirectory() async {
-    final pigeonVar_channelName = 'dev.flutter.pigeon.monolens.MonolensHostApi.cacheDirectory$pigeonVar_messageChannelSuffix';
+    final pigeonVar_channelName =
+        'dev.flutter.pigeon.monolens.MonolensHostApi.cacheDirectory$pigeonVar_messageChannelSuffix';
     final pigeonVar_channel = BasicMessageChannel<Object?>(
       pigeonVar_channelName,
       pigeonChannelCodec,
@@ -678,113 +701,126 @@ class MonolensHostApi {
     final pigeonVar_replyList = await pigeonVar_sendFuture as List<Object?>?;
 
     final Object? pigeonVar_replyValue = _extractReplyValueOrThrow(
-        pigeonVar_replyList,
-        pigeonVar_channelName,
-        isNullValid: false,
-    )
-    ;
+      pigeonVar_replyList,
+      pigeonVar_channelName,
+      isNullValid: false,
+    );
     return pigeonVar_replyValue! as String;
   }
 
   /// Reads dimensions, duration and size without decoding the whole file.
   Future<MediaInfo> probe(String path) async {
-    final pigeonVar_channelName = 'dev.flutter.pigeon.monolens.MonolensHostApi.probe$pigeonVar_messageChannelSuffix';
+    final pigeonVar_channelName =
+        'dev.flutter.pigeon.monolens.MonolensHostApi.probe$pigeonVar_messageChannelSuffix';
     final pigeonVar_channel = BasicMessageChannel<Object?>(
       pigeonVar_channelName,
       pigeonChannelCodec,
       binaryMessenger: pigeonVar_binaryMessenger,
     );
-    final Future<Object?> pigeonVar_sendFuture = pigeonVar_channel.send(<Object?>[path]);
+    final Future<Object?> pigeonVar_sendFuture = pigeonVar_channel.send(
+      <Object?>[path],
+    );
     final pigeonVar_replyList = await pigeonVar_sendFuture as List<Object?>?;
 
     final Object? pigeonVar_replyValue = _extractReplyValueOrThrow(
-        pigeonVar_replyList,
-        pigeonVar_channelName,
-        isNullValid: false,
-    )
-    ;
+      pigeonVar_replyList,
+      pigeonVar_channelName,
+      isNullValid: false,
+    );
     return pigeonVar_replyValue! as MediaInfo;
   }
 
   Future<MediaInfo> editImage(ImageEditRequest request) async {
-    final pigeonVar_channelName = 'dev.flutter.pigeon.monolens.MonolensHostApi.editImage$pigeonVar_messageChannelSuffix';
+    final pigeonVar_channelName =
+        'dev.flutter.pigeon.monolens.MonolensHostApi.editImage$pigeonVar_messageChannelSuffix';
     final pigeonVar_channel = BasicMessageChannel<Object?>(
       pigeonVar_channelName,
       pigeonChannelCodec,
       binaryMessenger: pigeonVar_binaryMessenger,
     );
-    final Future<Object?> pigeonVar_sendFuture = pigeonVar_channel.send(<Object?>[request]);
+    final Future<Object?> pigeonVar_sendFuture = pigeonVar_channel.send(
+      <Object?>[request],
+    );
     final pigeonVar_replyList = await pigeonVar_sendFuture as List<Object?>?;
 
     final Object? pigeonVar_replyValue = _extractReplyValueOrThrow(
-        pigeonVar_replyList,
-        pigeonVar_channelName,
-        isNullValid: false,
-    )
-    ;
+      pigeonVar_replyList,
+      pigeonVar_channelName,
+      isNullValid: false,
+    );
     return pigeonVar_replyValue! as MediaInfo;
   }
 
   /// Re-encodes [request]'s range to a new file. [jobId] addresses the export
   /// for [cancel] and for progress delivered over [MonolensFlutterApi].
   Future<MediaInfo> trimVideo(VideoTrimRequest request, String jobId) async {
-    final pigeonVar_channelName = 'dev.flutter.pigeon.monolens.MonolensHostApi.trimVideo$pigeonVar_messageChannelSuffix';
+    final pigeonVar_channelName =
+        'dev.flutter.pigeon.monolens.MonolensHostApi.trimVideo$pigeonVar_messageChannelSuffix';
     final pigeonVar_channel = BasicMessageChannel<Object?>(
       pigeonVar_channelName,
       pigeonChannelCodec,
       binaryMessenger: pigeonVar_binaryMessenger,
     );
-    final Future<Object?> pigeonVar_sendFuture = pigeonVar_channel.send(<Object?>[request, jobId]);
+    final Future<Object?> pigeonVar_sendFuture = pigeonVar_channel.send(
+      <Object?>[request, jobId],
+    );
     final pigeonVar_replyList = await pigeonVar_sendFuture as List<Object?>?;
 
     final Object? pigeonVar_replyValue = _extractReplyValueOrThrow(
-        pigeonVar_replyList,
-        pigeonVar_channelName,
-        isNullValid: false,
-    )
-    ;
+      pigeonVar_replyList,
+      pigeonVar_channelName,
+      isNullValid: false,
+    );
     return pigeonVar_replyValue! as MediaInfo;
   }
 
   /// Requests cancellation of an in-flight [trimVideo]. A cancelled export
   /// completes with a `monolens/cancelled` error rather than a result.
   Future<void> cancel(String jobId) async {
-    final pigeonVar_channelName = 'dev.flutter.pigeon.monolens.MonolensHostApi.cancel$pigeonVar_messageChannelSuffix';
+    final pigeonVar_channelName =
+        'dev.flutter.pigeon.monolens.MonolensHostApi.cancel$pigeonVar_messageChannelSuffix';
     final pigeonVar_channel = BasicMessageChannel<Object?>(
       pigeonVar_channelName,
       pigeonChannelCodec,
       binaryMessenger: pigeonVar_binaryMessenger,
     );
-    final Future<Object?> pigeonVar_sendFuture = pigeonVar_channel.send(<Object?>[jobId]);
+    final Future<Object?> pigeonVar_sendFuture = pigeonVar_channel.send(
+      <Object?>[jobId],
+    );
     final pigeonVar_replyList = await pigeonVar_sendFuture as List<Object?>?;
 
     _extractReplyValueOrThrow(
-        pigeonVar_replyList,
-        pigeonVar_channelName,
-        isNullValid: true,
-    )
-    ;
+      pigeonVar_replyList,
+      pigeonVar_channelName,
+      isNullValid: true,
+    );
   }
 
   /// Decodes frames at [atMs] for the trim filmstrip, each scaled so its
   /// longest edge is at most [maxDimension]. Returned as encoded JPEG bytes in
   /// the same order as the requested timestamps.
-  Future<List<Uint8List>> videoThumbnails(String path, List<int> atMs, int maxDimension) async {
-    final pigeonVar_channelName = 'dev.flutter.pigeon.monolens.MonolensHostApi.videoThumbnails$pigeonVar_messageChannelSuffix';
+  Future<List<Uint8List>> videoThumbnails(
+    String path,
+    List<int> atMs,
+    int maxDimension,
+  ) async {
+    final pigeonVar_channelName =
+        'dev.flutter.pigeon.monolens.MonolensHostApi.videoThumbnails$pigeonVar_messageChannelSuffix';
     final pigeonVar_channel = BasicMessageChannel<Object?>(
       pigeonVar_channelName,
       pigeonChannelCodec,
       binaryMessenger: pigeonVar_binaryMessenger,
     );
-    final Future<Object?> pigeonVar_sendFuture = pigeonVar_channel.send(<Object?>[path, atMs, maxDimension]);
+    final Future<Object?> pigeonVar_sendFuture = pigeonVar_channel.send(
+      <Object?>[path, atMs, maxDimension],
+    );
     final pigeonVar_replyList = await pigeonVar_sendFuture as List<Object?>?;
 
     final Object? pigeonVar_replyValue = _extractReplyValueOrThrow(
-        pigeonVar_replyList,
-        pigeonVar_channelName,
-        isNullValid: false,
-    )
-    ;
+      pigeonVar_replyList,
+      pigeonVar_channelName,
+      isNullValid: false,
+    );
     return (pigeonVar_replyValue! as List<Object?>).cast<Uint8List>();
   }
 }
@@ -795,12 +831,20 @@ abstract class MonolensFlutterApi {
   /// Fractional export progress in 0.0–1.0 for the job identified by [jobId].
   void onProgress(String jobId, double progress);
 
-  static void setUp(MonolensFlutterApi? api, {BinaryMessenger? binaryMessenger, String messageChannelSuffix = '',}) {
-    messageChannelSuffix = messageChannelSuffix.isNotEmpty ? '.$messageChannelSuffix' : '';
+  static void setUp(
+    MonolensFlutterApi? api, {
+    BinaryMessenger? binaryMessenger,
+    String messageChannelSuffix = '',
+  }) {
+    messageChannelSuffix = messageChannelSuffix.isNotEmpty
+        ? '.$messageChannelSuffix'
+        : '';
     {
       final pigeonVar_channel = BasicMessageChannel<Object?>(
-          'dev.flutter.pigeon.monolens.MonolensFlutterApi.onProgress$messageChannelSuffix', pigeonChannelCodec,
-          binaryMessenger: binaryMessenger);
+        'dev.flutter.pigeon.monolens.MonolensFlutterApi.onProgress$messageChannelSuffix',
+        pigeonChannelCodec,
+        binaryMessenger: binaryMessenger,
+      );
       if (api == null) {
         pigeonVar_channel.setMessageHandler(null);
       } else {
@@ -813,8 +857,10 @@ abstract class MonolensFlutterApi {
             return wrapResponse(empty: true);
           } on PlatformException catch (e) {
             return wrapResponse(error: e);
-          }          catch (e) {
-            return wrapResponse(error: PlatformException(code: 'error', message: e.toString()));
+          } catch (e) {
+            return wrapResponse(
+              error: PlatformException(code: 'error', message: e.toString()),
+            );
           }
         });
       }

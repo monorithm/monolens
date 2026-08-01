@@ -32,9 +32,17 @@ dart run pigeon --input pigeons/monolens_api.dart
 The generated Dart, Swift and Kotlin are **committed**, so a consumer never needs pigeon installed.
 CI regenerates and fails if the result differs, which is what keeps the three languages honest about the schema.
 
-Commit exactly what pigeon emits -- do not run `dart format` over a `.g` file.
-Pigeon formats its own output in its own style, so a reformatted generated file differs from a freshly generated one and fails the CI drift check on every run thereafter, reporting stale bindings when nothing about the schema changed.
-The format gate skips `*.g.dart` for the same reason.
+Formatting the Dart output is part of regenerating, not an afterthought:
+
+```bash
+dart run pigeon --input pigeons/monolens_api.dart
+dart format lib/src/messages.g.dart
+```
+
+Pigeon emits in its own style, and the two checks pull in opposite directions unless both steps run.
+pub.dev scores formatting across every Dart file in the published archive, so an unformatted `messages.g.dart` costs 10 points on the analysis score; but a formatted one that CI does not re-format after regenerating fails the drift check on every run, reporting stale bindings when the schema never moved.
+Running both leaves the committed file equal to `pigeon + dart format`, which is what each check independently expects.
+The Swift and Kotlin output is committed exactly as pigeon writes it -- `dart format` does not touch either, and pub.dev does not score them.
 
 ## Adding an operation
 

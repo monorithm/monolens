@@ -30,10 +30,12 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
 
+      # Generated files included: pub.dev's analysis scores formatting across
+      # every Dart file in the archive, `.g.dart` and all, so excluding them
+      # here would hide a real deduction. The bridge step below re-formats
+      # after regenerating, which is what keeps the two checks consistent.
       - name: Verify formatting
-        run: |
-          files=$(git ls-files '*.dart' | grep -v '\.g\.dart$')
-          dart format --output=none --set-exit-if-changed $files
+        run: git ls-files '*.dart' | xargs dart format --output=none --set-exit-if-changed
 
       - name: Analyze
         run: flutter analyze
@@ -43,12 +45,19 @@ jobs:
 
       # The generated bindings are committed so consumers never need pigeon.
       # That only holds if they actually match the schema.
+      #
+      # Formatting the Dart output is part of regenerating, not an afterthought:
+      # pigeon emits in its own style, so an unformatted `messages.g.dart` costs
+      # 10 points on pub.dev's static-analysis score, while a formatted one that
+      # is *not* re-formatted here would fail this diff on every single run.
       - name: Verify the generated bridge is in sync
         run: |
           dart run pigeon --input pigeons/monolens_api.dart
+          dart format lib/src/messages.g.dart
           if ! git diff --quiet; then
             echo "::error::Generated bindings are stale. Run:"
             echo "  dart run pigeon --input pigeons/monolens_api.dart"
+            echo "  dart format lib/src/messages.g.dart"
             git diff --stat
             exit 1
           fi
