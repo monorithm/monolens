@@ -1,0 +1,63 @@
+---
+title: Capture and edit, without the chrome
+description: Headless camera capture and on-device media editing for Flutter — crop, rotate, trim, blur, annotate. No ffmpeg, no widgets.
+template: splash
+editUrl: false
+hero:
+  tagline: A camera, an editor and a frame-accurate video trim that hand back textures and files instead of screens. What the author sees is yours to build.
+  actions:
+    - text: Getting started
+      link: /monolens/start/getting-started/
+      icon: right-arrow
+    - text: What is monolens?
+      link: /monolens/start/what-is-monolens/
+      variant: minimal
+    - text: pub.dev
+      link: https://pub.dev/packages/monolens
+      variant: minimal
+      icon: external
+---
+
+import { Card, CardGrid } from '@astrojs/starlight/components';
+
+```bash
+flutter pub add monolens
+```
+
+```dart
+final session = MonolensCameraSession();
+if (await session.initialize(CameraCaptureMode.photo) != CameraAccess.granted) {
+  return showRationale();
+}
+
+final photo = await session.capturePhoto();
+
+final edited = await MonolensEditor().applyImageEdit(
+  photo.path,
+  ImageEdit.none
+      .copyWith(crop: CropRect.centered(aspectRatio: 1, sourceAspectRatio: photo.aspectRatio))
+      .withAnnotation(TextAnnotation(text: 'Hello', center: const Offset(0.5, 0.8))),
+);
+```
+
+<CardGrid>
+  <Card title="Headless" icon="setting">
+    No widgets. Capture hands back a texture id and the geometry to orient it;
+    editing takes and returns file paths. Nothing to theme, nothing to fight.
+  </Card>
+
+  <Card title="No ffmpeg" icon="rocket">
+    `AVAssetExportSession` on iOS, Media3 `Transformer` on Android. No bundled
+    binary and no per-ABI size cost — and cuts stay frame-accurate.
+  </Card>
+
+  <Card title="Edits are values" icon="approve-check">
+    An `ImageEdit` re-applies to the original every time, so stacking costs no
+    generation loss and undo is just the previous value.
+  </Card>
+
+  <Card title="One decode, one draw" icon="magnifier">
+    Output size comes from metadata first, then the decoder is asked for only
+    those pixels. Cropping a 12 MP photo to 1080 px never materialises 12 MP.
+  </Card>
+</CardGrid>

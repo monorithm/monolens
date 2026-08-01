@@ -1,0 +1,119 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  FLUTTER_VERSION: "3.44.8"
+
+jobs:
+  package:
+    name: Package · analyze & test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          cache: true
+
+      - run: flutter --version
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Verify formatting
+        run: |
+          files=$(git ls-files '*.dart' | grep -v '\.g\.dart$')
+          dart format --output=none --set-exit-if-changed $files
+
+      - name: Analyze
+        run: flutter analyze
+
+      - name: Run tests
+        run: flutter test
+
+      # The generated bindings are committed so consumers never need pigeon.
+      # That only holds if they actually match the schema.
+      - name: Verify the generated bridge is in sync
+        run: |
+          dart run pigeon --input pigeons/monolens_api.dart
+          if ! git diff --quiet; then
+            echo "::error::Generated bindings are stale. Run:"
+            echo "  dart run pigeon --input pigeons/monolens_api.dart"
+            git diff --stat
+            exit 1
+          fi
+
+  android:
+    name: Android · build & lint native
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          cache: true
+
+      - name: Build the example
+        working-directory: example
+        run: flutter build apk --debug
+
+  ios:
+    name: iOS · build native
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          cache: true
+
+      - name: Build the example
+        working-directory: example
+        run: flutter build ios --debug --simulator --no-codesign
+
+  integration:
+    name: Integration · real encoders on a simulator
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          cache: true
+
+      # Written rather than committed, so the repo carries no binaries and the
+      # fixture's exact duration and dimensions are what the tests assert on.
+      - name: Generate fixtures
+        run: swift tool/make_fixture.swift
+
+      - name: Boot a simulator
+        run: |
+          udid=$(xcrun simctl list devices available -j \
+            | python3 -c "import json,sys;d=json.load(sys.stdin)['devices'];print(next(x['udid'] for v in d.values() for x in v if 'iPhone' in x['name']))")
+          xcrun simctl boot "$udid"
+          echo "SIMULATOR_UDID=$udid" >> "$GITHUB_ENV"
+
+      - name: Run the integration suite
+        working-directory: example
+        run: flutter test integration_test -d "$SIMULATOR_UDID"

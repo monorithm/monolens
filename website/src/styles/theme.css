@@ -1,0 +1,358 @@
+/* ---------------------------------------------------------------------------
+   monolens — visual identity
+
+   Sibling to the AHP site, deliberately not a copy of it. Where AHP is cold
+   slate and jade, monolens is graphite and lens flare: this package is about
+   optics, so the palette is the violet-to-cyan spread a coated lens throws.
+
+   Two signal colours, each meaning one thing:
+     violet — the declaration. An ImageEdit or VideoEdit value: intent, and not
+              yet pixels.
+     cyan   — the export. What the platform actually wrote to disk.
+
+   That is the distinction the whole API turns on — an edit is a value
+   re-applied to a source that is never modified — so a reader who learns the
+   colours has already learned the model. Deliberately not the default
+   blue/purple developer-docs palette, and deliberately not AHP's jade.
+
+   Fonts are self-hosted through @fontsource-variable, so the site makes no
+   third-party requests at runtime.
+   --------------------------------------------------------------------------- */
+
+@import '@fontsource-variable/newsreader';
+@import '@fontsource-variable/inter';
+@import '@fontsource-variable/jetbrains-mono';
+
+:root {
+  --mono-display: 'Newsreader Variable', ui-serif, Georgia, serif;
+  --mono-body: 'Inter Variable', system-ui, sans-serif;
+  --mono-mono: 'JetBrains Mono Variable', ui-monospace, monospace;
+
+  --sl-font: var(--mono-body);
+  --sl-font-mono: var(--mono-mono);
+
+  --sl-nav-height: 4rem;
+  --sl-text-code: 0.875em;
+}
+
+/* --- Dark: graphite and lens flare --------------------------------------- */
+:root,
+:root[data-theme='dark'] {
+  --mono-declaration: #8b7cf6;
+  --mono-declaration-bright: #b4a6ff;
+  --mono-export: #3ec9dd;
+
+  --sl-color-accent-low: #241f45;
+  --sl-color-accent: var(--mono-declaration);
+  --sl-color-accent-high: #c9beff;
+
+  --sl-color-white: #f0eff2;
+  --sl-color-gray-1: #e0dee4;
+  --sl-color-gray-2: #b6b3bd;
+  --sl-color-gray-3: #85818d;
+  --sl-color-gray-4: #524e5a;
+  --sl-color-gray-5: #302d37;
+  --sl-color-gray-6: #1f1d24;
+  --sl-color-gray-7: #19171d;
+  --sl-color-black: #121016;
+
+  --sl-color-bg: #121016;
+  --sl-color-bg-nav: rgba(18, 16, 22, 0.82);
+  --sl-color-bg-sidebar: #121016;
+  --sl-color-bg-inline-code: #24212b;
+  --sl-color-hairline-light: #2c2933;
+  --sl-color-hairline: #1f1d24;
+
+  --mono-surface: #1a1820;
+  --mono-surface-raised: #211e29;
+  --mono-grid: rgba(139, 124, 246, 0.07);
+}
+
+/* --- Light: cold paper --------------------------------------------------- */
+:root[data-theme='light'] {
+  --mono-declaration: #5b3bd4;
+  --mono-declaration-bright: #4629ad;
+  --mono-export: #0e7f93;
+
+  --sl-color-accent-low: #e6e0ff;
+  --sl-color-accent: #5b3bd4;
+  --sl-color-accent-high: #3a2490;
+
+  --sl-color-white: #17151b;
+  --sl-color-gray-1: #26232c;
+  --sl-color-gray-2: #494551;
+  --sl-color-gray-3: #6d6878;
+  --sl-color-gray-4: #a29daf;
+  --sl-color-gray-5: #d2ced9;
+  --sl-color-gray-6: #e9e7ee;
+  --sl-color-gray-7: #f3f2f6;
+  --sl-color-black: #fcfbfe;
+
+  --sl-color-bg: #fcfbfe;
+  --sl-color-bg-nav: rgba(252, 251, 254, 0.85);
+  --sl-color-bg-sidebar: #fcfbfe;
+  --sl-color-bg-inline-code: #eceaf3;
+  --sl-color-hairline-light: #e3e0ea;
+  --sl-color-hairline: #e9e7ee;
+
+  --mono-surface: #f5f3f9;
+  --mono-surface-raised: #ffffff;
+  --mono-grid: rgba(91, 59, 212, 0.06);
+}
+
+/* --- Typography ---------------------------------------------------------- */
+
+body {
+  font-family: var(--mono-body);
+  font-optical-sizing: auto;
+  letter-spacing: -0.003em;
+}
+
+.sl-markdown-content h1,
+.sl-markdown-content h2,
+.sl-markdown-content h3,
+.sl-markdown-content h4,
+.site-title,
+.hero h1,
+h1 {
+  font-family: var(--mono-display);
+  font-weight: 600;
+  letter-spacing: -0.022em;
+}
+
+.sl-markdown-content h2 {
+  /* A hairline above each section does more for scanning than extra space. */
+  margin-top: 2.75rem;
+  padding-top: 1.75rem;
+  border-top: 1px solid var(--sl-color-hairline-light);
+}
+
+.sl-markdown-content h2:first-of-type {
+  border-top: none;
+  padding-top: 0;
+}
+
+.sl-markdown-content h3 {
+  margin-top: 2rem;
+  color: var(--sl-color-white);
+}
+
+.sl-markdown-content p,
+.sl-markdown-content li {
+  line-height: 1.72;
+}
+
+/* Lead paragraph: the sentence under the title carries the page. */
+.sl-markdown-content > p:first-of-type {
+  font-size: 1.075rem;
+  color: var(--sl-color-gray-2);
+  line-height: 1.65;
+}
+
+.site-title {
+  font-family: var(--mono-mono);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+/* --- Code ---------------------------------------------------------------- */
+
+.expressive-code,
+.sl-markdown-content pre {
+  border-radius: 0.6rem;
+}
+
+.expressive-code .frame {
+  box-shadow: 0 1px 0 var(--sl-color-hairline-light);
+}
+
+.sl-markdown-content code:not(pre code) {
+  font-family: var(--mono-mono);
+  font-size: 0.855em;
+  font-weight: 500;
+  padding: 0.15em 0.4em;
+  border-radius: 0.3rem;
+  border: 1px solid var(--sl-color-hairline-light);
+}
+
+.sl-markdown-content :is(h1, h2, h3, h4) code {
+  font-size: 0.9em;
+  background: none;
+  border: none;
+  padding: 0;
+  color: var(--sl-color-accent-high);
+}
+
+/* --- Tables -------------------------------------------------------------- */
+
+.sl-markdown-content table {
+  font-size: 0.925rem;
+  border-collapse: collapse;
+  width: 100%;
+  display: block;
+  overflow-x: auto;
+}
+
+.sl-markdown-content th {
+  font-family: var(--mono-body);
+  font-weight: 600;
+  font-size: 0.82rem;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  text-align: left;
+  color: var(--sl-color-gray-3);
+  border-bottom: 1px solid var(--sl-color-gray-5);
+}
+
+.sl-markdown-content td {
+  border-bottom: 1px solid var(--sl-color-hairline-light);
+}
+
+/* --- Landing page -------------------------------------------------------- */
+
+.hero {
+  padding-block: 1rem 2rem;
+}
+
+.hero h1 {
+  font-size: clamp(2.4rem, 6vw, 3.9rem);
+  line-height: 1.02;
+  letter-spacing: -0.04em;
+}
+
+.hero .tagline {
+  font-size: clamp(1.05rem, 2vw, 1.28rem);
+  color: var(--sl-color-gray-2);
+  max-width: 46ch;
+  line-height: 1.5;
+}
+
+/* A faint signal grid behind the hero — texture without decoration. */
+.page > .main-frame:has(.hero)::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 30rem;
+  background-image:
+    linear-gradient(var(--mono-grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--mono-grid) 1px, transparent 1px);
+  background-size: 3rem 3rem;
+  mask-image: linear-gradient(to bottom, black, transparent 78%);
+  -webkit-mask-image: linear-gradient(to bottom, black, transparent 78%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Starlight fills the primary action with --sl-color-accent-high, a light tint
+ * in dark mode, so its label has to be dark to stay legible. */
+.hero .sl-link-button.primary {
+  color: var(--sl-color-black);
+  font-weight: 600;
+}
+
+/* --- Cards --------------------------------------------------------------- */
+
+.card,
+.sl-link-card {
+  background: var(--mono-surface);
+  border: 1px solid var(--sl-color-hairline-light);
+  border-radius: 0.7rem;
+  transition:
+    border-color 0.18s ease,
+    transform 0.18s ease;
+}
+
+.card:hover,
+.sl-link-card:hover {
+  border-color: var(--sl-color-accent);
+  transform: translateY(-2px);
+}
+
+.card .title,
+.sl-link-card .title {
+  font-family: var(--mono-display);
+  font-weight: 600;
+  letter-spacing: -0.015em;
+}
+
+/* --- Asides -------------------------------------------------------------- */
+
+.starlight-aside {
+  border-radius: 0.55rem;
+  border-inline-start-width: 3px;
+}
+
+.starlight-aside__title {
+  font-family: var(--mono-body);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+/* --- Sidebar ------------------------------------------------------------- */
+
+.sidebar-content summary,
+.sidebar-content .large {
+  font-family: var(--mono-body);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--sl-color-gray-3);
+}
+
+.sidebar-content a {
+  font-size: 0.9rem;
+  border-radius: 0.35rem;
+}
+
+.sidebar-content a[aria-current='page'] {
+  font-weight: 600;
+  background: var(--sl-color-accent-low);
+  color: var(--sl-color-accent-high);
+}
+
+/* --- Mermaid ------------------------------------------------------------- */
+
+/* astro-mermaid renders into the flow; give a diagram the same frame a code
+ * block gets so the two read as siblings rather than as a stray image. */
+.mermaid {
+  margin-block: 2rem;
+  padding: 1.5rem 1.25rem;
+  background: var(--mono-surface);
+  border: 1px solid var(--sl-color-hairline-light);
+  border-radius: 0.7rem;
+  overflow-x: auto;
+  text-align: center;
+}
+
+.mermaid svg {
+  display: block;
+  margin-inline: auto;
+  max-width: 100%;
+  height: auto;
+}
+
+/* --- Custom pieces used in the content ----------------------------------- */
+
+/* Eyebrow label above a section. */
+.mono-eyebrow {
+  font-family: var(--mono-mono);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--mono-declaration);
+}
+
+/* Side-by-side comparison, for source/output and before/after. */
+.mono-split {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 56rem) {
+  .mono-split {
+    grid-template-columns: 1fr 1fr;
+  }
+}

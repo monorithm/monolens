@@ -1,0 +1,45 @@
+name: monolens
+description: "Headless camera capture and on-device media editing for Flutter: crop, rotate, trim, blur regions, burn in text, stickers and drawings, with undo. No ffmpeg."
+version: 0.4.0
+repository: https://github.com/monorithm/monolens
+issue_tracker: https://github.com/monorithm/monolens/issues
+documentation: https://monorithm.github.io/monolens
+topics:
+  - camera
+  - video
+  - image-editing
+  - media
+  - annotations
+
+environment:
+  # The floor CI proves, not the floor the direct dependencies would tolerate.
+  # `camera` alone would allow 3.38, but its Android implementation resolves to
+  # a version needing 3.44, and `sdk: ^3.12.2` already excludes everything below
+  # the 3.44 line anyway -- 3.44.8 is the release that ships Dart 3.12.2.
+  # Lowering a floor later is safe for consumers; raising one is breaking.
+  sdk: ^3.12.2
+  flutter: ">=3.44.0"
+
+dependencies:
+  camera: ^0.12.0+2
+  flutter:
+    sdk: flutter
+  image_picker: ^1.2.3
+  # Used by the generated bridge (lib/src/messages.g.dart). Flutter pins it
+  # transitively, but pub requires the import to be declared directly.
+  meta: ^1.16.0
+
+dev_dependencies:
+  flutter_lints: ^6.0.0
+  flutter_test:
+    sdk: flutter
+  pigeon: ^27.3.0
+
+flutter:
+  plugin:
+    platforms:
+      android:
+        package: com.monorithm.monolens
+        pluginClass: MonolensPlugin
+      ios:
+        pluginClass: MonolensPlugin
