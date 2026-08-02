@@ -41,15 +41,15 @@ bun.lock
 example/assets/
 
 # --- Published-archive only -------------------------------------------------
-# Contributor documentation. User documentation lives in `website/` and is
-# published to monorithm.github.io/monolens, which is what `documentation:` in
-# the pubspec points at, so neither tree needs to ship. Excluding this also
-# settles pub's "rename docs to doc" layout warning.
+# Contributor documentation. User documentation lives in the monodocs repo and
+# is published to monorithm.github.io/monodocs/monolens/latest/, which is what
+# `documentation:` in the pubspec points at, so neither tree needs to ship.
+# Excluding this also settles pub's "rename docs to doc" layout warning.
 /docs/
 
-# The Starlight site. Source for the published docs, useless to a consumer, and
-# it carries a node_modules the moment anyone runs `yarn`.
-/website/
+# The redirect stub deployed to the old Pages URL. Two HTML files that exist
+# only to forward browsers to monodocs; nothing for a consumer of the package.
+/redirect/
 
 # macOS-only fixture generator for the integration suite.
 /tool/

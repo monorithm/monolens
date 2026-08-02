@@ -3,7 +3,7 @@ description: "Headless camera capture and on-device media editing for Flutter: c
 version: 0.4.0
 repository: https://github.com/monorithm/monolens
 issue_tracker: https://github.com/monorithm/monolens/issues
-documentation: https://monorithm.github.io/monolens
+documentation: https://monorithm.github.io/monodocs/monolens/latest/
 topics:
   - camera
   - video
