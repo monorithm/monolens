@@ -61,3 +61,12 @@ signatures are at
 
 To work on the package itself rather than with it, see
 [CONTRIBUTING.md](https://github.com/monorithm/monolens/blob/main/CONTRIBUTING.md).
+
+## Credits
+
+The photograph in the editing screenshots is by
+[Walling](https://unsplash.com/@walling?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText)
+on [Unsplash](https://unsplash.com/photos/black-laptop-computer-turned-on-beside-white-and-black-robot-toy-SQIpFNb0Nk4?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText).
+The clip in the trim and export screenshots is by
+[Monstera Production](https://www.pexels.com/video/man-wearing-headphones-using-a-tablet-9465045/)
+on Pexels.

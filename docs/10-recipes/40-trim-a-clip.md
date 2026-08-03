@@ -30,6 +30,12 @@ Cuts are frame-accurate: both platforms re-encode rather than cutting on the nea
 
 `clamped` holds whichever handle you are *not* dragging:
 
+![Trim mode in the example: a filmstrip with the kept range bright and the rest dimmed, and a readout reading "15.0s of 30.4s" with a Max badge.](../assets/example-trim.jpg)
+
+That readout is `clamped` doing its work -- the source is 30.4s, the cap is
+15s, and the badge says which limit stopped the handle. The strip itself is
+`editor.filmstrip()`, and the speaker toggle is `muteAudio`.
+
 ```dart
 trim.clamped(
   clip.duration,
@@ -50,6 +56,10 @@ final CapturedVideo result = await job.result;
 
 **Handle `TrimCancelled` separately from `MediaEditException`.**
 Cancelling is not a failure: drop it silently rather than showing the banner a real error gets.
+
+![An export overlay in the example: "Exporting", a percentage, a progress bar and a Cancel action.](../assets/example-export.jpg)
+
+`job.progress` drives the bar and `job.cancel()` is behind that button.
 
 ```dart
 try {
