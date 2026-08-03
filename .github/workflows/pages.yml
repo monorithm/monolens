@@ -1,0 +1,44 @@
+name: Pages
+
+# Publishes the redirect stub in redirect/.
+#
+# monolens is documented at https://monorithm.github.io, built from
+# https://github.com/monorithm/monorithm.github.io, which assembles every
+# source into one site. This repo no longer builds a site of its own.
+#
+# It still deploys, and has to: the URLs this repo used to serve are in
+# published packages, in READMEs and in other people's links. redirect/404.html
+# maps the deep ones onto their counterparts rather than dropping everyone on a
+# landing page. Without this, Pages would keep serving the last build of the
+# old site forever -- documentation that silently stops tracking its subject is
+# worse than a redirect.
+on:
+  push:
+    branches: [main]
+    paths: ['redirect/**', '.github/workflows/pages.yml']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/upload-pages-artifact@v5
+        with:
+          path: redirect
+
+      - id: deployment
+        uses: actions/deploy-pages@v5

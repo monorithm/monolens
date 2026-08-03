@@ -1,5 +1,13 @@
 # Contributing
 
+Documentation for people changing monolens, not people using it.
+
+User documentation lives in [`docs/`](docs/) and is published at
+[monorithm.github.io/opensource/monolens/latest](https://monorithm.github.io/opensource/monolens/latest/),
+alongside monowave's.
+The pages are plain markdown with no frontmatter -- the first `#` heading is the title, numeric filename prefixes set the order -- so they read correctly here on GitHub and on the site without being written twice.
+`redirect/` keeps the old URLs working, including the one baked into monolens 0.4.0's pubspec.
+
 ## The checks
 
 Everything below must pass before a change lands; CI runs the same set.
@@ -56,7 +64,7 @@ Step 3 is not optional.
 An operation with no test double is one no host can write a test around, which makes it useless to the people it is for.
 
 If the operation changes pixels, add a pixel-level assertion.
-See [testing](/monolens/guides/testing/#why-pixels) for why dimensions are not enough and for the two traps in writing those assertions.
+See [testing](docs/10-guides/40-testing.md#why-pixels) for why dimensions are not enough and for the two traps in writing those assertions.
 
 ## Conventions
 
@@ -66,7 +74,8 @@ A comment that says what the next line does is noise; one that says why it is th
 
 **Docs.**
 One sentence per line, ASCII prose, diagrams as mermaid.
-Documents in `docs/` explain why a thing is shaped the way it is and how to use it; exact signatures belong in the dartdoc on the type.
+Documents explain *why* a thing is shaped the way it is and *how* to use it; the exact signature of a type belongs in the dartdoc on that type.
+The conventions for the published pages -- no frontmatter, the leading `#` heading as the title, numeric filename prefixes, relative cross-links between files -- live in the [site's README](https://github.com/monorithm/monorithm.github.io#writing).
 
 **Commits.**
 Conventional commits, enforced by commitlint through a lefthook hook:
@@ -93,9 +102,9 @@ ios/monolens/Sources/  Swift: probe, transform, export, annotations
 android/src/main/      Kotlin: the same, plus the blur shader
 example/               a complete editor built on the public API
 tool/make_fixture.swift generates the integration fixtures
-docs/                  contributor notes -- this file
-website/               the user documentation site
+docs/                  the user documentation, published to the site
+redirect/              keeps the pre-monodocs URLs alive
 ```
 
 The example is not a scratch pad.
-It is the reference implementation for [building an editor](/monolens/guides/building-an-editor/), and it is where the gesture and rendering code lives that a headless plugin deliberately does not ship -- so changes to the API should be reflected there.
+It is the reference implementation for [building an editor](docs/10-guides/30-building-an-editor.md), and it is where the gesture and rendering code lives that a headless plugin deliberately does not ship -- so changes to the API should be reflected there.

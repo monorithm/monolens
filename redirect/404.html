@@ -6,50 +6,57 @@
     <meta name="robots" content="noindex" />
     <script>
       // GitHub Pages serves this file for any path under /monolens/ that no
-      // longer exists, which after the move to monodocs is all of them. The
-      // old site's routes map one-for-one onto the new ones:
-      //
-      //   /monolens/guides/capture/
-      //   -> /monodocs/monolens/latest/guides/capture/
-      //
-      // so the deep links in monolens 0.4.0's README and on its pub.dev page
-      // keep working rather than landing on a bare "moved" notice. A pubspec
-      // that is already published cannot be edited, which is why this is worth
-      // carrying rather than just redirecting the root.
+      // longer exists, which after the move is all of them. Mapping deep links
+      // rather than sending everything to the landing page is the difference
+      // between a link that still works and one that merely does not 404.
       (function () {
-        var path = window.location.pathname.replace(/^\/monolens/, '');
-        if (path === '' || path === '/') path = '/';
-        window.location.replace(
-          'https://monorithm.github.io/monodocs/monolens/latest' +
-            path +
-            window.location.hash
-        );
+        // /monolens/<section>/<page>/ -> /opensource/monolens/latest/<NN-section>/<NN-page>/
+        // The section and file names both changed when the docs moved into the
+        // package repo, so the pairs are listed rather than derived. These are
+        // the URLs monolens 0.4.0 published; its pubspec cannot be edited.
+        var TABLE = {
+                  "start/what-is-monolens": "00-start/00-what-is-monolens",
+                  "start/getting-started": "00-start/10-getting-started",
+                  "guides/capture": "10-guides/00-capture",
+                  "guides/editing": "10-guides/10-editing",
+                  "guides/annotations": "10-guides/20-annotations",
+                  "guides/building-an-editor": "10-guides/30-building-an-editor",
+                  "guides/testing": "10-guides/40-testing",
+                  "reference/api": "20-reference/00-api",
+                  "reference/platforms": "20-reference/10-platforms",
+                  "reference/architecture": "20-reference/20-architecture"
+        };
+        var page = window.location.pathname
+          .replace(/^\/monolens\/?/, '')
+          .replace(/\/$/, '');
+        var target = 'https://monorithm.github.io/opensource/monolens/latest/';
+        if (page && TABLE[page]) target += TABLE[page] + '/';
+        window.location.replace(target + window.location.hash);
       })();
     </script>
     <style>
       body {
-        font-family: system-ui, sans-serif;
+        font-family: 'IBM Plex Sans', system-ui, sans-serif;
         max-width: 34rem;
         margin: 6rem auto;
         padding: 0 1.5rem;
         line-height: 1.6;
-        color: #17151b;
-        background: #fcfbfe;
+        color: #090b0c;
+        background: #ffffff;
       }
       @media (prefers-color-scheme: dark) {
-        body { color: #f0eff2; background: #121016; }
+        body { color: #f9fbfb; background: #090b0c; }
       }
-      a { color: #5b3bd4; }
-      @media (prefers-color-scheme: dark) { a { color: #b4a6ff; } }
+      a { color: #007a55; }
+      @media (prefers-color-scheme: dark) { a { color: #00bc7d; } }
     </style>
   </head>
   <body>
-    <h1>The monolens docs have moved</h1>
+    <h1>This has moved</h1>
     <p>
-      They now live alongside the other Monorithm packages at
-      <a href="https://monorithm.github.io/monodocs/monolens/latest/"
-        >monorithm.github.io/monodocs/monolens/latest</a
-      >.
+      monolens documentation now lives on the Monorithm site at
+      <a href="https://monorithm.github.io/opensource/monolens/latest/">monorithm.github.io/opensource/monolens/latest/</a>.
     </p>
+    <p>Redirecting you now.</p>
   </body>
 </html>
