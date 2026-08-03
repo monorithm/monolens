@@ -20,7 +20,7 @@ jobs:
   verify:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v5
 
       - uses: subosito/flutter-action@v2
         with:
@@ -84,6 +84,13 @@ jobs:
             exit 1
           fi
 
+      # Catches the packaging mistakes that only show up in the archive -- a
+      # `.pubignore` that swept up `lib/` or the native directories, or one
+      # that stopped excluding `example/build` and turned a 170 KB upload into
+      # gigabytes. Nothing else in this job looks at what actually ships.
+      - name: Validate the archive
+        run: flutter pub publish --dry-run
+
   publish:
     needs: verify
     runs-on: ubuntu-latest
@@ -97,7 +104,7 @@ jobs:
       id-token: write
       contents: read
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v5
 
       # NOT dart-lang/setup-dart/.github/workflows/publish.yml@v1: that reusable
       # workflow provisions the Dart SDK alone, and this package depends on
