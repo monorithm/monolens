@@ -12,6 +12,13 @@ flutter pub add monolens
 
 **New here? Start with [your first edit](00-start/00-tutorial.md)** -- one guided build, from an empty project to a captured photo with a caption burned into it.
 
+![The monolens example app: capture a photo or video, or import one, then edit.](assets/example-home.png)
+
+The screenshots through these pages are the example app in `example/`, running
+on a device. It is a complete editor built entirely on the public API -- which
+is the point: monolens ships no widgets, so everything you can see there is
+code you would own.
+
 ## The four kinds of page
 
 | | For when you want to |

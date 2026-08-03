@@ -23,6 +23,8 @@ TextAnnotation(
 Use the plate (`backgroundArgb`) over busy media.
 It is a rounded rectangle behind the glyphs with padding derived from the type size, and it is what keeps text legible over a photo you do not control.
 
+![The example's text tool: a colour row, a caption field, and a "plate behind text" switch.](../assets/example-text.jpg)
+
 ## Add an emoji
 
 **An emoji is text.**
@@ -62,6 +64,11 @@ BlurAnnotation(
 ```
 
 `strength` scales against the region's own shorter edge rather than being an absolute radius, so a value chosen for a large box still reads on a small one.
+
+![A blur region placed over a laptop screen in the example editor.](../assets/example-blur.jpg)
+
+What you see on the canvas is a frosted stand-in, not a real blur -- a
+`CustomPainter` cannot sample the media beneath it. The export is the truth.
 
 Blur is the only primitive that **samples the media**, which is why it is applied beneath the other three regardless of list position -- a caption across a blurred face has to stay legible.
 

@@ -64,6 +64,13 @@ someRect.clampedToBounds();                                   // slide back insi
 
 Call `clampedToBounds()` on every frame of a drag rather than at the end, so the rect can never leave the frame in the first place.
 
+![Crop mode in the example: a 1:1 region bright against the dimmed full frame, with aspect presets and rotate, flip and reset beneath.](../assets/example-crop.jpg)
+
+Note that crop mode shows the *whole* frame with the crop region picked out,
+rather than showing only what survives -- an author cannot judge a crop they
+cannot see the outside of. [Rendering the canvas](./70-render-the-editing-canvas.md)
+covers swapping between the two.
+
 Crops are fractions rather than pixels because a crop UI works in layout space, whose size changes with rotation, insets and screen size -- see [architecture](../20-concepts/90-architecture.md#crops-are-normalized-end-to-end).
 
 ## Put the output where you want it

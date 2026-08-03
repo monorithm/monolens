@@ -6,6 +6,11 @@ Every bug worth having a name for in an editing surface is a violation of that.
 Render the media with the crop and rotation *already applied*, at the output's aspect ratio.
 Then annotation coordinates are literally output coordinates, and there is no conversion to get wrong.
 
+![The example's editing surface: the media at output aspect ratio, with the tool row beneath it.](../assets/example-editor.jpg)
+
+Every pixel of that is host code. monolens supplied the geometry and the export;
+the canvas, the tool row and the chrome are the example app's.
+
 ```dart
 final aspect = draft.outputAspectRatio(source.aspectRatio);
 
