@@ -27,7 +27,7 @@ return AspectRatio(
 ```
 
 The cost is that you write the viewfinder and the editing surface.
-The [example app](https://github.com/monorithm/monolens/tree/main/example) is a complete one - direct manipulation, crop handles, a filmstrip scrubber, annotation tools and undo - and [building an editor](../10-guides/30-building-an-editor.md) is the recipe.
+The [example app](https://github.com/monorithm/monolens/tree/main/example) is a complete one - direct manipulation, crop handles, a filmstrip scrubber, annotation tools and undo - and [building an editor](../10-recipes/70-render-the-editing-canvas.md) is the recipe.
 
 ## An edit is a value, not a command
 
@@ -44,7 +44,7 @@ const ImageEdit(
 Three things fall out of that.
 Stacking edits costs no generation loss, because nothing ever re-encodes an encode.
 "Revert" is dropping back to `ImageEdit.none`.
-And undo is cheap - [`ImageEdit.none`](../10-guides/10-editing.md) just keeps previous values, so there is nothing to invert and nothing to replay, which matters because blur has no inverse.
+And undo is cheap - [`ImageEdit.none`](../10-recipes/30-edit-a-still.md) just keeps previous values, so there is nothing to invert and nothing to replay, which matters because blur has no inverse.
 
 ## No ffmpeg
 
@@ -67,7 +67,7 @@ Cuts are frame-accurate: both platforms force a re-encode rather than snapping t
 
 ## Where to go next
 
-- [Getting started](./10-getting-started.md) - empty project to a captured photo with a caption on it.
-- [Capture](../10-guides/00-capture.md) - the session, the preview texture, and the gallery import.
-- [Editing](../10-guides/10-editing.md) - crops, trims, filmstrips and exports.
-- [Architecture](../20-reference/20-architecture.md) - why each boundary sits where it does.
+- [Getting started](../00-start/00-tutorial.md) - empty project to a captured photo with a caption on it.
+- [Capture](../10-recipes/00-capture-a-photo-or-video.md) - the session, the preview texture, and the gallery import.
+- [Editing](../10-recipes/30-edit-a-still.md) - crops, trims, filmstrips and exports.
+- [Architecture](./90-architecture.md) - why each boundary sits where it does.

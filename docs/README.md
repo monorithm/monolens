@@ -10,61 +10,47 @@ What the author sees is yours to build.
 flutter pub add monolens
 ```
 
-```dart
-final session = MonolensCameraSession();
-if (await session.initialize(CameraCaptureMode.photo) != CameraAccess.granted) {
-  return showRationale();
-}
+**New here? Start with [your first edit](00-start/00-tutorial.md)** -- one guided build, from an empty project to a captured photo with a caption burned into it.
 
-final photo = await session.capturePhoto();
+## The four kinds of page
 
-final edited = await MonolensEditor().applyImageEdit(
-  photo.path,
-  ImageEdit.none
-      .copyWith(crop: CropRect.centered(aspectRatio: 1, sourceAspectRatio: photo.aspectRatio))
-      .withAnnotation(TextAnnotation(text: 'Hello', center: const Offset(0.5, 0.8))),
-);
-```
+| | For when you want to |
+|---|---|
+| [Start](00-start/00-tutorial.md) | learn the package by building something with it |
+| [Recipes](10-recipes/00-capture-a-photo-or-video.md) | get one specific job done |
+| [Concepts](20-concepts/00-what-is-monolens.md) | understand why it is shaped this way |
+| [Reference](30-reference/00-api-map.md) | look something up |
 
-## Start here
+Each page is one of those and not the others, which is what keeps them short.
 
-- [What is monolens?](00-start/00-what-is-monolens.md) -- what the package does, what headless means in practice, and why there is no ffmpeg.
-- [Getting started](00-start/10-getting-started.md) -- from an empty project to a captured photo with a caption burned into it.
+## Recipes
 
-## What the shape buys you
+- [Capture a photo or a video](10-recipes/00-capture-a-photo-or-video.md)
+- [Render the viewfinder](10-recipes/10-render-the-viewfinder.md)
+- [Import from the gallery](10-recipes/20-import-from-the-gallery.md)
+- [Edit a still](10-recipes/30-edit-a-still.md)
+- [Trim a clip](10-recipes/40-trim-a-clip.md)
+- [Wire undo and redo](10-recipes/50-wire-undo-and-redo.md)
+- [Annotate a photo or a clip](10-recipes/60-annotate-media.md)
+- [Render the editing canvas](10-recipes/70-render-the-editing-canvas.md)
+- [Handle editor gestures](10-recipes/80-handle-editor-gestures.md)
+- [Test without a camera or a device](10-recipes/90-test-without-hardware.md)
 
-**Headless.**
-No widgets.
-Capture hands back a texture id and the geometry to orient it; editing takes and returns file paths.
-Nothing to theme, nothing to fight.
+## Concepts
 
-**No ffmpeg.**
-`AVAssetExportSession` on iOS, Media3 `Transformer` on Android.
-No bundled binary and no per-ABI size cost -- and cuts stay frame-accurate.
-
-**Edits are values.**
-An `ImageEdit` re-applies to the original every time, so stacking costs no generation loss and undo is just the previous value.
-
-**One decode, one draw.**
-Output size comes from metadata first, then the decoder is asked for only those pixels.
-Cropping a 12 MP photo to 1080 px never materialises 12 MP.
-
-## Guides
-
-- [Capture](10-guides/00-capture.md) -- `CameraSession` holds a device and hands back a preview texture; `MediaPicker` is a one-shot gallery import.
-  Both have test doubles.
-- [Editing](10-guides/10-editing.md) -- probe a file, apply an image edit, run a video export, pull frames for a filmstrip.
-- [Annotations](10-guides/20-annotations.md) -- text, stickers, blur and strokes, burned into a still or into every frame of a clip.
-- [Building an editor](10-guides/30-building-an-editor.md) -- the recipe for an editing surface built on monolens, and the traps.
-- [Testing](10-guides/40-testing.md) -- unit tests against the shipped fakes, integration tests against the real native code, and what each tier can answer.
+- [What is monolens?](20-concepts/00-what-is-monolens.md) -- what the package does, what headless means in practice, and why there is no ffmpeg.
+- [Architecture](20-concepts/90-architecture.md) -- why the package is headless, how the native bridge is drawn, and what each boundary buys.
 
 ## Reference
 
-- [API reference](20-reference/00-api.md) -- the whole public surface of `package:monolens/monolens.dart`, grouped by what it is for.
-- [Platform notes](20-reference/10-platforms.md) -- requirements, permissions, and the places the two platforms differ.
-- [Architecture](20-reference/20-architecture.md) -- why the package is headless, how the native bridge is drawn, and what each boundary buys.
+- [API map](30-reference/00-api-map.md) -- the public surface grouped by what it is for, and what is deliberately absent.
+- [Platform notes](30-reference/10-platforms.md) -- requirements, permissions, and the places the two platforms differ.
 
 ---
 
-monolens is on [pub.dev](https://pub.dev/packages/monolens).
-To work on the package itself rather than with it, see [CONTRIBUTING.md](https://github.com/monorithm/monolens/blob/main/CONTRIBUTING.md) -- an absolute link because that file lives outside `docs/` and so is not published to the site, where a relative one would dangle.
+monolens is on [pub.dev](https://pub.dev/packages/monolens), and its API
+signatures are at
+[pub.dev/documentation/monolens/latest](https://pub.dev/documentation/monolens/latest/).
+
+To work on the package itself rather than with it, see
+[CONTRIBUTING.md](https://github.com/monorithm/monolens/blob/main/CONTRIBUTING.md).

@@ -32,7 +32,7 @@ No ffmpeg on either side.
 ## Divergences that reach the API
 
 **Preview rotation.** iOS delivers frames already oriented; Android streams them in sensor orientation.
-The host applies `PreviewTexture.sensorOrientation` -- see [capture](../10-guides/00-capture.md#rendering-the-viewfinder).
+The host applies `PreviewTexture.sensorOrientation` -- see [capture](../10-recipes/10-render-the-viewfinder.md).
 
 **Texture ids.**
 Zero is valid.

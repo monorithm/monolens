@@ -6,7 +6,7 @@ Capture hands back a texture id and the geometry to orient it; editing takes a f
 What the author sees is the host's to build.
 
 This document is the shape and the reasoning.
-How to *use* any of it is in the guides -- [capture](../10-guides/00-capture.md), [editing](../10-guides/10-editing.md), [annotations](../10-guides/20-annotations.md) -- and the full surface is in the [API reference](./00-api.md).
+How to *use* any of it is in the [recipes](../10-recipes/00-capture-a-photo-or-video.md) -- [capture](../10-recipes/00-capture-a-photo-or-video.md), [editing](../10-recipes/30-edit-a-still.md), [annotations](../10-recipes/60-annotate-media.md) -- and the full surface is in the [API map](../30-reference/00-api-map.md).
 This is why it looks the way it does.
 
 ## Why headless
@@ -267,7 +267,7 @@ A composer should drop it silently rather than show the banner it shows for a re
 
 ## Testing
 
-Three tiers, each answering something the others cannot; [testing](../10-guides/40-testing.md) is the working guide.
+Three tiers, each answering something the others cannot; [testing](../10-recipes/90-test-without-hardware.md) is the working guide.
 
 | Tier | Runs on | Answers |
 |---|---|---|
@@ -311,7 +311,7 @@ That is not a stylistic choice: GLES reports an array uniform under the name `uR
 Fragments outside every region cost a single texture fetch, which is most of the frame.
 
 Two floors constrain the native code: iOS 13, which is why the encoder uses raw UTI strings rather than `UTType`, and Android minSdk 24, which is why `getScaledFrameAtTime` is guarded.
-[Platform notes](./10-platforms.md) lists every divergence, including the ones handled internally.
+[Platform notes](../30-reference/10-platforms.md) lists every divergence, including the ones handled internally.
 
 ## Extending it
 

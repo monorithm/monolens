@@ -240,18 +240,18 @@ would have to decode.
 ## Architecture
 
 The shape below is the summary. User documentation is at
-[monorithm.github.io/monodocs/monolens/latest](https://monorithm.github.io/monodocs/monolens/latest/),
-built from [monodocs](https://github.com/monorithm/monodocs):
-[getting started](https://monorithm.github.io/monodocs/monolens/latest/start/getting-started/),
-guides for [capture](https://monorithm.github.io/monodocs/monolens/latest/guides/capture/),
-[editing](https://monorithm.github.io/monodocs/monolens/latest/guides/editing/) and
-[annotations](https://monorithm.github.io/monodocs/monolens/latest/guides/annotations/), a recipe
+[monorithm.github.io/opensource/monolens/latest](https://monorithm.github.io/opensource/monolens/latest/),
+written in [`docs/`](docs/) and published by [the site](https://github.com/monorithm/monorithm.github.io):
+[getting started](https://monorithm.github.io/opensource/monolens/latest/00-start/00-tutorial/),
+recipes for [capture](https://monorithm.github.io/opensource/monolens/latest/10-recipes/00-capture-a-photo-or-video/),
+[editing](https://monorithm.github.io/opensource/monolens/latest/10-recipes/30-edit-a-still/) and
+[annotations](https://monorithm.github.io/opensource/monolens/latest/10-recipes/60-annotate-media/), a recipe
 for
-[building an editor](https://monorithm.github.io/monodocs/monolens/latest/guides/building-an-editor/),
-the [API reference](https://monorithm.github.io/monodocs/monolens/latest/reference/api/),
-[platform notes](https://monorithm.github.io/monodocs/monolens/latest/reference/platforms/),
-[testing](https://monorithm.github.io/monodocs/monolens/latest/guides/testing/), and the
-[architecture](https://monorithm.github.io/monodocs/monolens/latest/reference/architecture/)
+[building an editor](https://monorithm.github.io/opensource/monolens/latest/10-recipes/70-render-the-editing-canvas/),
+the [API reference](https://monorithm.github.io/opensource/monolens/latest/30-reference/00-api-map/),
+[platform notes](https://monorithm.github.io/opensource/monolens/latest/30-reference/10-platforms/),
+[testing](https://monorithm.github.io/opensource/monolens/latest/10-recipes/90-test-without-hardware/), and the
+[architecture](https://monorithm.github.io/opensource/monolens/latest/20-concepts/90-architecture/)
 behind all of it. Contributor documentation is in
 [`docs/`](https://github.com/monorithm/monolens/tree/main/docs).
 

@@ -1,4 +1,10 @@
-# Getting started
+# Your first edit
+
+Monolens is headless: it captures, edits and exports, and it ships no widgets.
+
+Follow this once, in order, and you will have an app that takes a photo, crops it, burns in a caption and writes the result to disk.
+It stays on the shortest path on purpose -- no alternatives, no configuration you do not need yet.
+When you want to do something specific afterwards, the [recipes](../10-recipes/00-capture-a-photo-or-video.md) are task by task, and [concepts](../20-concepts/00-what-is-monolens.md) is where the reasoning lives.
 
 Monolens is a headless Flutter plugin: it captures media and edits it, and it ships no widgets at all.
 That means there is nothing to theme and nothing to fight, and it means you draw the viewfinder and the editing surface yourself.
@@ -10,12 +16,12 @@ This page gets you from an empty project to a captured photo with a caption burn
 flutter pub add monolens --hosted-url <private-pub-server>
 ```
 
-Monolens needs iOS 13 and Android minSdk 24; see [platforms](../20-reference/10-platforms.md) for what those floors buy and cost.
+Monolens needs iOS 13 and Android minSdk 24; see [platforms](../30-reference/10-platforms.md) for what those floors buy and cost.
 
 ## Permissions
 
 Declare the usage strings each platform requires.
-Monolens never asks for a permission itself -- see [capture](../10-guides/00-capture.md#permissions) for why -- but the OS still requires the declarations.
+Monolens never asks for a permission itself -- see [capture](../10-recipes/00-capture-a-photo-or-video.md#handle-the-permission-you-were-given) for why -- but the OS still requires the declarations.
 
 iOS `Info.plist`:
 
@@ -60,7 +66,7 @@ return AspectRatio(
 );
 ```
 
-On Android you also apply `preview.sensorOrientation`; the full recipe is in [capture](../10-guides/00-capture.md#rendering-the-viewfinder).
+On Android you also apply `preview.sensorOrientation`; the full recipe is in [capture](../10-recipes/10-render-the-viewfinder.md).
 
 ## Apply an edit
 
@@ -86,7 +92,7 @@ final edited = await editor.applyImageEdit(
 ```
 
 The source file is never modified, so the same edit can be re-applied with different parameters and lose nothing to re-compression.
-Order is fixed and documented in [editing](../10-guides/10-editing.md#the-order-of-operations).
+Order is fixed and documented in [editing](../10-recipes/30-edit-a-still.md).
 
 ## Trim a clip
 
@@ -118,7 +124,7 @@ try {
 ## Run the example
 
 The example app is a complete editor -- direct manipulation, crop handles, a filmstrip scrubber, annotation tools and undo -- built entirely on the public API.
-It is the reference implementation for [building an editor](../10-guides/30-building-an-editor.md).
+It is the reference implementation for [building an editor](../10-recipes/70-render-the-editing-canvas.md).
 
 ```bash
 cd example && flutter run
@@ -126,9 +132,10 @@ cd example && flutter run
 
 ## Where to go next
 
-- Building a viewfinder or importing from the gallery: [capture](../10-guides/00-capture.md).
-- Cropping, trimming, exporting, undo: [editing](../10-guides/10-editing.md).
-- Text, emoji, stickers, blur and strokes: [annotations](../10-guides/20-annotations.md).
-- Writing the UI around it: [building an editor](../10-guides/30-building-an-editor.md).
-- Testing your composer without a device: [testing](../10-guides/40-testing.md).
-- Why any of it is shaped this way: [architecture](../20-reference/20-architecture.md).
+You now have the whole shape of the package in one file. Pick by what you need:
+
+**To do a specific job**, the [recipes](../10-recipes/00-capture-a-photo-or-video.md) are one task each -- [render the viewfinder](../10-recipes/10-render-the-viewfinder.md), [import from the gallery](../10-recipes/20-import-from-the-gallery.md), [trim a clip](../10-recipes/40-trim-a-clip.md), [annotate media](../10-recipes/60-annotate-media.md), [build an editing surface](../10-recipes/70-render-the-editing-canvas.md), [test with no device](../10-recipes/90-test-without-hardware.md).
+
+**To understand why it is shaped this way**, [what is monolens](../20-concepts/00-what-is-monolens.md) and [architecture](../20-concepts/90-architecture.md).
+
+**To look something up**, the [API map](../30-reference/00-api-map.md) and [platform notes](../30-reference/10-platforms.md).
